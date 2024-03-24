@@ -135,5 +135,48 @@
 - AWS 수신처 : Amazon S3, Amazon Redshift, Amazon ElasticSearch
 - 관리가 필요하지 않으며, 자동으로 용량 크기가 조정되고, 서버리스이므로 관리할 서버가 없다.
 - 람다를 이용해 데이터 변환 가능하다.
-- 사용처 -> Kinesis
+- 사용처 -> Kinesis Data Stream, Amazon Cloudwatch, AWS IOT
+- 수신처 -> Amazon S3, Amazon Redshift, Amazon ElasticSearch
+
+## Amazon MQ
+- 클라우드로 마이그레이트할 때 기존의 프로토콜을 사용하고 싶을 때 사용
+- `RabbitMQ와 ActiveMQ 두 가지 기술을 위한 관리형 메시지 브로커 서비스`
+
+## Amazon ECS(Elastic Container Service)
+- AWS에서 컨테이너를 실행하면 ECS 클러스터에 ECS 태스크를 실행한다.
+
+## Amazon Cognito
+- 사용자에게 웹 및 모바일 앱과 상호 작용할 수 있는 자격 증명을 부여한다.
+1. Cognito 사용자 풀
+- 앱 사용자에게 가입 기능을 제공한다. API Gateway 및 애플리케이션 로드 밸런서와 통합된다.
+2. Cognito Identity Pool
+- 앱에 등록된 사용자에게 임시 자격 증명을 제공해서 일부 AWS 리소스에 직접 액세스할 수 있게 해 주고 Cognito 사용자 풀과 잘 통합된다.
+- Cognito는 AWS 외부의 웹 과 모바일 앱 사용자가 대상이다. -> `수백 명의 사용자, 모바일 사용자, SAML을 통한 인증`
+
+## Cognito 자격 증명 풀
+- 사용자에게 자격 증명을 제공하지만 API Gateway나 애플리케이션 로드 밸런서를 통해 애플리케이션에 액세스하지 않고
+임시 AWS 자격 증명을 사용해 AWS 계정에 직접 액세스한다.
+- DynamoDB에 행 수준의 보안 적용 가능.
+
+## Amazon ECS
+1. EC2 시작 유형
+- Amazon ECS가 여러 EC2 인스턴스로 구성, 인스턴스별로 각각 ECS Agent 실행해야 한다. 도커 컨테이너는 미리 프로비저닝한 Amazon EC2 인스턴스에 위치한다.
+2. Fargate 시작 유형(서버리스)
+- AWS에 도커 유형을 정의하는 데, 인프라를 프로비저닝하지 않아 관리할 EC2 인스턴스가 없다.
+
+## ECS 태스크의 IAM Role
+- ECS 에이전트만이 EC2 인스턴스 프로파일을 사용하며, 그 EC2 인스턴스 프로파일을 이용해 API 호출을 한다.
+- 인스턴스가 저장된 ECS 서비스가 Cloudwatch 로그에 API 호출을 해서 컨테이너 로그를 보내고, ECR로부터 도커 이미지를 가져온다.
+
+## ECS - Auto Scaling
+- ECS 서비스의 CPU 사용률을 확장할 수 있고, 메모리 사용률, 그리고 ALB 관련 지표인 타겟당 요청 수를 확장할 수 있다.
+- 특정 타겟을 추적하는 대상 추적 스케일링이나 단계 스케일링, 예약 스케일링이 있다.
+
+## Amazon ECR(Elastic Container Registry)
+- AWS에 도커 이미지를 저장하고 관리하는 데 사용된다.
+- 이미지 비공개 또는 퍼블릭 저장 가능.
+- ECR은 Amazon ECS와 통합됨. 이미지는 백그라운드에서 Amazon S3에 저장된다.
+- `ECR 저장소에 여러 도커 이미지가 있는데 ECS 클러스터의 EC2 인스턴스에 이미지를 끌어오기 위해서는 EC2 인스턴스의 IAM 역할을 지정해야 한다.`
+
+
 
