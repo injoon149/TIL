@@ -135,5 +135,61 @@ Kinesis Data Firehose로 연결한다.
 데이터를 받기만 한다.
 
 ## KMS(Key Management Service)
-- 
+- 데이터에 대한 액세스를 쉽게 제어할 수 있다.
+- KMS를 쓰면, CloudtRAIL을 통해, 키를 사용하기 위해 이루어진 모든 API 호출을 감사할 수 있다.
+- AWS 서비스와 통합할 수 있다. EX) EBS 볼륨에 저장되어 있는 데이터 암호화
+- 대칭 KMS 키는 이미지를 암호화/복화하는 키가 동일하고, 비대칭 키는 서로 다르다.
+
+## KMS - Multi Region Key
+- 다른 AWS 리전에서 사용할 수 있는 KMS 키 세트로, 서로 교차해서 사용할 수 있다.
+- 사용 사례: 전역 클라이언트 측 암호화
+- 클라이언트 측 암호화 사용하면 DB 관리자가 특정 열에 접근할 때, KMS 키에 대한 접근 권한이 없으면 해당 데이터를
+읽을 수 없다.
+- `AMI는 소스 계정에 있고 KMS 키로 암호화되었다. 어떤 방식으로 A 계정의 AMI에서 B 계정의 EC2 인스턴스를 시작할지?`
+- 1. 시작 권한으로 AMI 속성 수정 : B 계정에서 AMI를 시작하도록 허용한다.
+- 2. B 계정에서 사용하도록 KMS 키도 공유 : 키 정책으로 실행
+- 3. B 계정에서 AMI와 KMS 키 모두 사용할 수 있는 충분한 권한을 가진 IAM 역할이나 사용자 생성.
+
+## SSM 매개변수 저장소
+- 구성 및 암호를 위한 보안 스토리지, db-url이나 db-password 저장
+- 매개변수 정책: 이를 통해 만료 기한을 뜻하는 TTL을 매개변수에 할당할 수 있다. 한 번에 여러 개의 정책도 할당 가능.
+
+## AWS Secrets Manager
+- 암호를 저장하는 서비스. X일마다 강제로 암호를 교체하여 암호 관리를 더 효율적으로 할 수 있다.
+- 교체할 암호를 강제 생성 및 자동화할 수 있다: 새 함수를 생성할 람다 함수 정의 필요.
+- RDS와 Aurora의 통합 가능
+- 복수의 AWS 리전에 암호 유지 가능.
+
+## AWS Certificate Manager(ACM)
+- TLS 인증서를 AWS에서 프로비저닝, 관리 및 배포하게 해 준다.
+- 퍼블릭 인증서 요청: 인증서에 포함할 도메인 이름을 나열하고, 유효성 검증 방법 선택, 인증서 발행
+- AWS Config 사용 : 만료된 인증서를 확인하는 규칙을 설정해서 Config 서비스가 ACM 서비스를 검사하여, 규칙에 위배되는 인증서가 있을 경우
+규정 비준수 이벤트가 EventBridge로 간다.
+
+## AWS WAF(웹 애플리케이션 방화벽)
+- 계층 7에서 일어나는 일반적인 웹 취약점 공격으로부터 웹 애플리케이션을 보호한다.
+- WAF의 배포는 Application Load Balancer, API Gateway, CloudFront, AppSync GraphQL API, Cognito User Pool에 할 수 있다.
+- 방화벽 배포 후에는 ACL과 규칙 정의 필요.
+- HTTP 헤더와 본문에 기반해 필터링할 수 있고, URL 문자열을 조건으로 두어 SQL 주입, XSS 등의 일반적인 공격을 차단할 수 있다.
+- 규칙 그룹: 여러 웹 ACL에 추가할 수 있는 재사용 가능한 규칙 모음.
+
+## AWS Shield
+- DDOS 공격으로부터 스스로를 보호하기 위한 서비스.
+- AWS Shield Standard : 무료, syn/udp flood나 반사 공격 및 L3/L4 공격으로부터 보호한다.
+- AWS Shield Advanced : EC2, ELB, Global Accelerator, Route 53 보호, DDOS 대응팀 24시간 상주, 자동 WAF규칙 생성
+
+## Firewall Manager
+- AWS Organization에 있는 모든 계정의 방화벽 규칙을 관리하는 서비스
+- 여러 계층의 규칙을 동시에 관리할 수 있다. 보안 규칙 설정 가능
+- 리소스별 보호: WAF
+- 여러 계정에서 WAF 사용, 새 리소스 보호 자동화 : AWS Firewall Manager
+
+## Amazon GuardDuty
+- 지능형 위협 탐지를 이용해서 AWS 계정을 보호할 수 있다.
+- 머신러닝 알고리즘으로 이상 탐지를 수행하고, 서드파티 데이터를 사용해서 위협을 탐지한다.
+- CloudTrail Event Logs, VPC Flow Logs, DNS Logs 검색
+- EventBridge 규칙을 설정해서 결과에 대한 알림을 받을 수 있다.
+- `암호화폐 공격을 방어할 수 있다 : 전문적인 탐지 기능`
+
+
 
