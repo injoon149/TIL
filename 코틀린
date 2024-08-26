@@ -1,0 +1,91 @@
+1. 변수
+  - val name:String = "인준" //읽기만 가능한 변수
+  - var age:String = 20 //읽기,쓰기 다 가능한 변수
+  - var address = "서울" //타입생략 가능
+2. null값 허용/불가
+  - var name:String? = null  //null값 허용
+  - var age:Int = null   //null값 허용x
+3. 이미지뷰에 맞게 사진 크기 조정
+- android:scaleType = "fitXY"
+
+4. 테두리 둥글게 : cardview-wrap-content 사용
+5. var : 변수값 변경 가능, val : 선언 시에만 초기화 가능
+6. 형변환 : to변수() 통해 형변환, ex) var b:String = a.toString()
+7. 배열 ex) var intArr:Array<Int> = arrayOf(1,2,3,4)
+
+8. 기본형 함수
+  - fun add(a:Int, b:Int, c:Int) : Int {  return a + b + c; }
+9. is: 데이터 타입 비교  ex) if(a is Int) { println("int") }
+10. when : switch문과 비슷함
+
+11. for문
+  - for(i in 0...3) { print(i) }
+12. @label : 반복문에 라벨 이름을 달고 break, continue 문에 @라벨이름을 달면 break, continue가 라벨 이름으로 실행
+13. 클래스
+  - 코틀린은 생성자 필요x
+  - init : 생성자
+  - constructor : 보조 생성자
+
+14. 리스트
+  - listOf: 생성 시 넣은 객체를 추가, 삭제, 대체 불가
+  - mutablelistOf : 대체, 추가, 삭제 가능 함수 지원(add, sort, shuffle)
+  - ex) val a:mutableListOf<Int> ()
+15. null처리 
+  - b?.let{ c.add(it) } => b가 null이면 let 구문이 실행되지 않는다.
+16. Data 클래스
+  - 클래스에 has, equals, toString, copy 등의 메서드를 자동으로 구현해 주는 클래스
+
+17. Map 컬렉션
+  var a:MutableMap<Int,String> = mutablemapof()
+  a[1] = "a"
+  a[2] = "b"
+  for(i in a) {   println ("${i.key} ${i.value}") }
+18. 로그 찍기
+  Log.d("MainActivity", "testLog")
+  Log.e -> 오류, Log.i -> 정보, Log.v ->상세, Log.w->경고, Log.d->디버그
+19. 데이터 바인딩
+  - 애플리케이션 로직과 레이아웃을 바인딩하는 데 필요한 글루 코드를 최소화한다.
+  - xml에 DTO 또는 데이터 집합 클래스를 바인드해서 해당 클래스가 변경되면 연결된 여러 개의 뷰가 한 번에 변경된다.
+  - 뷰 레벨에서 코드로 작성하던 것을 대부분 XML 레이아웃에서 처리할 수 있다.
+
+20. 안드로이드 4대 컴포넌트
+  - 액티비티, 서비스, 컨텐트 프로바이더, 브로드캐스트 리시버
+  - 1. 액티비티 : 안드로이드에서 화면 관리 등 다양한 이벤트를 처리하는 컴포넌트
+  - 2. 서비스 : 백그라운드에서 특정 기능을 수행하는 컴포넌트
+  - 3. 컨텐트 프로바이더 : 앱 간 데이터 공유를 위한 클래스를 제공하는 컴포넌트
+  - 4. 브로드캐스트 리시버 : 특정 어플에서 발생하는 특정 브로드캐스트 메시지 처리
+
+21. MVVM 패턴
+  - Model, View, ViewModel 패턴으로, 프로그램의 비즈니스 로직과, 프레젠테이션 로직을 UI로 명확하게 분리하는 패턴
+  - Model : 데이터를 다루는 부분. 비즈니스 로직을 포함한다.
+  - View : 레이아웃과 화면을 보여주는 역할
+  - ViewModel : View에서 발생하는 이벤트를 감지하고, 해당 이벤트에 맞는 비즈니스 로직을 수행한다. Model과 상호작용하여 데이터를 가져오거나 업데이트한다.
+
+22. MVVM 특징
+  - MVP는 View와 Presenter 사이의 의존관계가 1:1로 형성된다.
+  - MVVM은 View와 ViewModel 사이의 관계가 1대n으로 되어있다. 데이터 바인딩을 이용한다면 View와 ViewModel 사이의 의존성을 없앨 수 있다.
+23. 코틀린 언어의 장점
+  - 1. 자바에 존재하는 여러 가지 번거로운 자바 코드(생성자, getter, setter 등)들을 묵시적으로 제공한다.
+  - 2. 컴파일 시점 검사를 통해, 코틀린은 null이 될 수 없는 값을 추적한다.
+
+24. Toast
+  - 사용자에게 짧은 메시지 형식으로 정보를 전달하는 팝업. 사용자에게 정보를 전달하는 용도로 많이 사용한다.
+  - ex) Toast.makeText(this.getApplicationContext(), "", Toast.Length_Short);
+        myToast.show();
+25. 커스텀폰트 적용
+  - 폰트 다운받아서 fontfamily = "" 이런 식으로 적용시킨다.
+26. 코틀린 리스트
+  var testList = mutableListOf<String>()
+  testList.add("a")
+  Log.d("mainActivity", testList.toString())
+  
+
+
+
+
+
+
+
+
+
+
