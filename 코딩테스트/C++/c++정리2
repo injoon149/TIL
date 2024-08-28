@@ -1,0 +1,20 @@
+## priority queue
+#include <queue>
+priority_queue<int> pq 
+- 기본적으로 최댓값을 우선적으로 뽑아 주는 최대 우선순위 큐이다. 따라서 pop() 함수를 쓰면 최댓값이 나온다.
+- 최솟값을 뽑은 priority_queue 선언
+  #include <functional>
+  priority_queue<int, vector<int>, greater<int>> pq;
+
+## tuple
+tuple<int,int,int> t1 = make_tuple(3,2,1);
+cout << get<0>(t1) << endl;
+get<3>(t2) = 3;  이런 식으로 수정한다.
+
+## custom comparator
+class compare {
+  bool operator()(pair<int,int> a, pair<int,int> b) {
+        return a.first*a.second < b.first*b.second;
+  }
+}
+priority_queue<pair<int,int>, vector<pair<int,int>>, compare> pq;
