@@ -5,3 +5,17 @@
   - Software Development Kit, 앱을 개발할 수 있는 도구 키트로 컴파일러, 디버거, api 등이 포함된다.
 ## Code Convention
   - 가독성이 높은 코드를 위한 코딩 스타일 규약
+
+## 뷰
+- 화면에 보이는 모든 구성 요소를 뜻한다.(button, textbox, image 등)
+- 뷰 컨테이너: 뷰를 화면에 배치하는 것, 연관된 여러 개의 뷰를 포함할 수 있으며 1개의 뷰는 반드시 하나의 뷰 컨테이너에 포함되어야 한다.
+
+## Linearlayout
+- gravity 속성: 모든 하위 뷰에 대한 중력 방향 결정
+- layout_gravity 속성: 해당 group view에 속하는 하위 view의 속성
+
+## Spinner
+- 여러 개의 값 중 1개를 선택하기 위한 안드로이드 기본 위젯
+- xml 내의 고정 리스트에서 값을 가져온다.
+
+
