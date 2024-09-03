@@ -18,3 +18,41 @@ class compare {
   }
 }
 priority_queue<pair<int,int>, vector<pair<int,int>>, compare> pq;
+
+## lower_bound, upper_bound
+- 이진 탐색으로 원소를 탐색한다.
+- lower_bound는 찾으려는 key 값 이상의 숫자가 배열 몇 번째에서 처음 등장하는지 찾기 위함, upper_bound는 초과하는 숫자.
+- set에서도 사용 가능하며, 탐색을 진행할 배열이 오름차순 정렬되어야 한다.
+
+## unordered_map
+- HashMap 자료구조로 되어 있으며, HashMap의 경우 해싱을 기반으로 데이터를 관리해 주는 자료구조
+- HashMap의 삽입, 삭제, 탐색 모두 시간복잡도 O(1)
+- HashMap은 (key, value) 쌍 형태로 들어가 있어, key와 그 key에 따른 value 값을 동시에 저장하는 자료구조이다.
+- 사용 방법
+#include <unordered_map>
+unordered_map<k,v> name;
+
+## unordered_map 함수
+- m.insert({k,v}) 혹은 m[k] = v : 삽입
+- m.erase(k) : key가 k인 쌍을 찾아 제거
+- m.find(k) 혹은 m[k] : hashmap에 key가 k인 쌍이 있는지 확인. 없다면 m.end()를 반환하고, 있다면 그 위치의 iterator 반환
+
+## find함수 활용
+- cout << (m.find(k))->first << endl;
+- cout << (*m.find(k)).first << endl;
+- cout << m[k] << endl;
+- key를 문자열로 설정도 가능하다.
+
+## unordered_map 특징
+1. 해시 함수 사용 : O(1) 시간 복잡도로 요소에 접근
+2. 중복된 키 방지
+3. 범용성 : 어떠한 데이터 유형도 다 키 또는 값으로 사용 가능
+4. 동적으로 크기 조절 가능
+
+
+
+
+
+
+
+
