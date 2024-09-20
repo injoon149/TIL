@@ -49,6 +49,13 @@ unordered_map<k,v> name;
 3. 범용성 : 어떠한 데이터 유형도 다 키 또는 값으로 사용 가능
 4. 동적으로 크기 조절 가능
 
+## unordered_map -> vector로 변환
+- vector<pair<int,int>> freg_vector(freg_map.begin(), freg_map.end());
+
+## set - lower_bound, upper_bound
+- *s.lower_bound(e) : 같거나 큰 최초의 숫자
+- *s.upper_bound(e) : 큰 최초의 숫자
+- set의 마지막 원소의 위치: s.rbegin()
 
 
 
