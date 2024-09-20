@@ -57,6 +57,68 @@ unordered_map<k,v> name;
 - *s.upper_bound(e) : 큰 최초의 숫자
 - set의 마지막 원소의 위치: s.rbegin()
 
+## map stl
+- treemap 자료구조로 되어 있고, treemap은 balanced binary tree 구조로 데이터를 관리한다.
+- 삽입, 삭제, 탐색 등 모든 함수의 시간복잡도가 o(logn)
+- 순회할 때 자동으로 key 기준 오름차순으로 순회한다.
+- insert,erase,find,empty,size 등의 함수가 있다.
+- 여러 단어가 주어졌을 때, 각 단어가 몇 번씩 주어진지 사전순으로 앞선 단어가 먼저 나오도록 할 때: map<string,int>를 이용하면 사전 순으로 오름차순 정렬 가능하다.
+
+## unordered_set
+- Hashset 자료구조로 되어 있고, 삽입,삭제,탐색 등 모든 함수의 시간복잡도가 O(1)이다.
+
+## set
+- TreeSet 자료구조로 되어 있고, balanced binary tree 구조로 데이터를 관리한다.
+
+## 이중 연결 리스트
+Head                  Node               Tail
+prev data Next <->  prev data next <-> prev data next
+- 탐색은 O(N), 삭제와 삽입은 O(1)의 시간이 걸린다.
+Class Node {  
+    Data data;
+    Node prev, next;
+    public Node(Data data) {
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+    }
+};
+
+
+## 이중 연결 리스트 삽입
+- 노드 u 뒤에 단일 노드 singleton 삽입
+  void insertNext(Node u, Node singleton) {
+      singleton.prev = u;
+      singleton.next = u.next;
+      if(null != singleton.prev) singleton.prev.next = singleton;
+      if(null != singleton.next) singleton.next.prev = singleton;
+}
+
+## 이중 연결 리스트 삭제
+  void pop(Node u) {
+    if(null != u.prev) u.prev.next = u.next;
+    if(null != u.next) u.next.prev = u.prev;
+    u.prev = u.next = null;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
