@@ -91,6 +91,61 @@ public void search() {
 - sql 조인을 활용해서 연관된 엔티티를 sql 한 번에 조회하는 기능
 - 주로 성능 최적화에 사용된다.
 - join(), leftJoin() 등 조인 기능 뒤에 fetchJoin()으로 추가한다.
+
+14. 서브 쿼리
+    com.querydsl.jpa.JPAExpressions 사용한다.
+    1) 나이가 가장 많은 회원 조회
+       @Test
+       public void subQuery() throws Exception {
+         QMember memberSub = new QMember("memberSub");
+         List<Member> result = queryFactory.selectFrom(member)
+                                         .where(member.age.eq(
+                                                   JPAExpressions.select(memberSub.age.max()).from(memberSub)).fetch();
+    2) select 절에 subquery
+       List<Tuple> fetch = queryFactory
+                             .select(member.username, JPAExpressions.select(memberSub.age.avg()).from(memberSub))
+                             .from(member).fetch();
+       }
+
+15. from 절의 서브쿼리 한계
+    - JPQL 서브쿼리의 한계점으로, FROM 절의 서브쿼리(인라인 뷰)는 지원하지 않는다.
+    - 해결 방안: 서브쿼리를 join으로 변경하거나, 애플리케이션에서 쿼리를 2번 분리해서 사용하거나, nativeSQL을 사용한다.
+
+16. case 문
+    - select, 조건절, order by에서 사용 가능
+    1) 단순한 조건
+       List<String> result = queryFactory
+                               .select(member.age.when(10).then("열 살")
+                                                 .when(20).then("스무 살")
+                                                 .otherwise("기타"))
+                               .from(member).fetch();
+
+    2) 복잡한 조건
+       List<String> result = queryFactory
+                               .select(new CaseBuilder()
+                                       .when(member.age.between(0,20)).then("0~20살")
+                                       .when(member.age.between(21,30)).then("21~30살")
+                                       .otherwise("기타")
+                               .from(member).fetch();
+    3) orderBy에서 case문 추가하기
+       1. 0~30살이 아닌 회원을 가장 먼저 출력
+       2. 0~20살 회원 출력
+       3. 21~30살 회원 출력
+          => 이런 식으로 우선순위를 정해서 출력하고 싶을 때, rank를 지정해서 출력한다. 높은 rank부터 출력
+
+    4) 예시 코드
+       MemberExpression<Integer> rankPath = new CaseBuilder()
+                                                   .when(member.age.between(0,20)).then(2)
+                                                   .when(member.age.between(21,30)).then(1)
+                                                   .otherwise(3)
+       List<Tuple> result = queryFactory
+                             .select(member.username, member.age, rankPath)
+                             .from(member).orderBy(rankPath.desc())
+                             .fetch();
+
+    5) 상수, 문자 더하기
+       - 상수가 필요하면 select문에 Expressions.constant("A") 이런 식으로 사용한다.
+       - 문자 더할 때는 concat문을 사용한다.
   
 
 
