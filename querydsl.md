@@ -146,6 +146,55 @@ public void search() {
     5) 상수, 문자 더하기
        - 상수가 필요하면 select문에 Expressions.constant("A") 이런 식으로 사용한다.
        - 문자 더할 때는 concat문을 사용한다.
+
+17. 프로젝션과 결과 반환
+    - 프로젝션: select 대상 지정
+    - 프로젝션 대상이 하나면 타입을 명확하게 지정할 수 있고, 프로젝션 대상이 둘 이상이면 튜플이나 DTO로
+    조회한다.
+
+    1) 튜플 조회
+        List<Tuple> result = queryFactory
+                            .select(member.username, member.age)
+                            .from(member).fetch();
+        for(Tuple tuple : result) {
+            String username = tuple.get(member.username);
+            Integer age = tuple.get(member.age);
+            soutv
+        }
+
+    2) DTO 조회
+        - 순수 JPA에서 DTO를 조회할 때는 new 명령어를 사용해야 하고, DTO의 패키지 이름을 다 적어주어야
+       해서 불편하다. 그리고 생성자 방식만 지원한다.
+
+    3) QueryDSL 빈 생성 
+        - 프로퍼티 접근, 필드 직접 접근, 생성자 사용 총 3가지의 방법이 있다.
+        - 결과를 DTO 반환할때 사용한다.
+
+    4) 프로퍼티 접근 - Setter
+        List<MemberDto> result = queryFactory
+                                .select(Projections.bean(MemberDto.class,
+                                        member.username,
+                                        member.age))
+                                .from(member).fetch();
+     -> 여기에 bean 대신 fields 넣으면 필드 직접 접근, constructor 넣으면 생성자 접근.
+
+    5) 생성자 사용 - 별칭이 다를 때
+        List<MemberDto> result = queryFactory
+                                .select(Projections.constructor(MemberDto.class,
+                                        member.username, member.age))
+                                .from(member).fetch();
+    6) 생성자 + @QueryProjection 사용 (가장 깔끔)
+        - MemberDTO 생성자에 @QueryProjection을 붙인다.
+       
+        List<MemberDto> result = queryFactory
+                            .select(new QMemberDto(member.username, member.age))
+                            .from(member).fetch();
+        -> 컴파일러로 타입을 체크할 수 있으므로 가장 안전한 방법이다.
+        -> 그러나 DTO에 QueryDsl 어노테이션을 넣어야해서, querydsl에 의존적이다는 것과 DTO까지 
+            Q 파일을 생성해야 하는 단점이 있다.
+
+18. 동적 쿼리를 해결하는 두 가지 방식
+    - BooleanBuilder, Where 다중 파라미터 사용 두 가지 방법이 있다.
   
 
 
