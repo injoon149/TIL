@@ -210,6 +210,36 @@ public void search() {
     select a.column, b.column from table1 a, (select column1, column2 from table2) b
     where condition;
 
+22. 동적 쿼리 - where 다중 파라미터 사용
+    private List<Member> searchMember2(String usernameCond, Integer ageCond)
+    {
+      return queryFactory.selectFrom(member)
+                        .where(usernameEq(usernameCond), ageEq(ageCond))
+                        .fetch();
+    }
+    private BooleanExpression usernameEq(String usernameCond) {
+        return usernameCond != null ? member.username.eq(usernameCond) : null;
+    }
+    - where 조건에 null값은 무시된다.
+    - 메서드를 다른 쿼리에서 재활용할 수 있고, 쿼리 자체의 가독성이 높아진다.
+   
+  23. 수정, 삭제 벌크 연산
+      - 영속성 컨텍스트를 무시하고 DB에 직접 update, delete 쿼리문을 보내는 것.
+      - JPA에서 단 건의 데이터의 경우 변경 감지를 통해 update를 수행하고, 여러 데이터의 경우 벌크 연산을 통해 한번에 수정/삭제한다.
+      - 1. 쿼리 한번으로 대량 데이터 수정
+          long count = queryFactory.update(member)
+                                    .set(member.username, "비회원")
+                                   .where(member.age.lt(28)).execute()
+           long count = queryFactory.update(member)
+                                   .set(member.age, member.age.add(1))
+                                   .execute();
+      - 벌크 연산을 실행하고 나면, em.flush(), em.clear()로 영속성 컨텍스트를 초기화하는 것이 안전하다.
+
+   24. sql function
+       - 사용자 정의 함수: 특정 기능들을 모듈화, 재사용할 수 있어서 복잡한 쿼리문을 간결하게 만들 수 있지만, 함수 사용이 쿼리 속도를 느리게
+         만들 수도 있다.
+    
+
   
 
 
