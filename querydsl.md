@@ -195,6 +195,21 @@ public void search() {
 
 18. 동적 쿼리를 해결하는 두 가지 방식
     - BooleanBuilder, Where 다중 파라미터 사용 두 가지 방법이 있다.
+
+19. 서브쿼리
+    - 하나의 sql문에 포함되어 있는 또다른 sql문
+    - 서브쿼리는 메인쿼리의 칼럼을 사용할 수 있지만, 메인쿼리는 서브쿼리의 칼럼을 사용할 수 없다.
+    - 서브쿼리에서는 order by를 사용할 수 없다.
+
+20. 인라인 뷰
+    - from 절에 있는 서브쿼리의 결과는 하나의 테이블로 인지한다.
+    - 인라인 뷰의 결과값은 하나의 테이블 형태로 반환되어야 한다.
+    - 기존 테이블, 인라인 뷰 결과값으로 도출한 테이블 형태의 결과값, 총 두 개의 테이블을 조인하여 최종 결과를 구한다.
+   
+21. 인라인 뷰 예시
+    select a.column, b.column from table1 a, (select column1, column2 from table2) b
+    where condition;
+
   
 
 
